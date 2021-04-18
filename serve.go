@@ -12,6 +12,7 @@ import (
 
 const tmpDir = "./tmp/"
 
+// Serve runs the actual SMTP server and handles all the mails
 func (o *OCRMyMail) Serve() {
 
 	// Validate config

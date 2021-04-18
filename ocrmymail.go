@@ -1,5 +1,6 @@
 package ocrmymail
 
+// OCRMyMail holds the config.
 type OCRMyMail struct {
 	config *Config
 }
