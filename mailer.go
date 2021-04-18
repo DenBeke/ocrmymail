@@ -5,9 +5,15 @@ import (
 	"gopkg.in/mail.v2"
 )
 
+// Attachment represents an attachment to be included in an email.
+type Attachment struct {
+	FilenameDisk string
+	FilenameMail string
+}
+
 // SendMail sends a mail with the given recipient, subject body and attachments.
 // Attachments should contain a list of filenames.
-func (m *OCRMyMail) SendMail(to string, subject string, body string, attachments []string) error {
+func (m *OCRMyMail) SendMail(to string, subject string, body string, attachments []Attachment) error {
 
 	// Construct mail message
 	msg := mail.NewMessage()
@@ -16,8 +22,8 @@ func (m *OCRMyMail) SendMail(to string, subject string, body string, attachments
 	msg.SetHeader("Subject", subject)
 	msg.SetBody("text/html", body)
 
-	for _, filename := range attachments {
-		msg.Attach(filename)
+	for _, attachment := range attachments {
+		msg.Attach(attachment.FilenameDisk, mail.Rename(attachment.FilenameMail))
 	}
 
 	d := mail.NewDialer(

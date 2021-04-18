@@ -30,7 +30,7 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 
 	log.Printf("%+v", email)
 
-	attachmentsToMailOut := []string{}
+	attachmentsToMailOut := []Attachment{}
 
 	for _, attachment := range email.Attachments {
 		if attachment.ContentType == "image/pdf" {
@@ -54,7 +54,7 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 
 			log.Println("Saved OCR version on disk")
 
-			attachmentsToMailOut = append(attachmentsToMailOut, attachmentFileName)
+			attachmentsToMailOut = append(attachmentsToMailOut, Attachment{FilenameDisk: attachmentFileName, FilenameMail: documentName + ".pdf"})
 
 		}
 	}
@@ -68,13 +68,13 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 
 	// Delete attachments after they are mailed out
 	for _, attachment := range attachmentsToMailOut {
-		err := os.Remove(attachment)
+		err := os.Remove(attachment.FilenameDisk)
 		if err != nil {
 			log.Errorf("couldn't delete attachment: %v", err)
 		}
 	}
 
-	fmt.Println("Relayed email to original recipient.")
+	log.Println("Relayed email to original recipient.")
 
 }
 
