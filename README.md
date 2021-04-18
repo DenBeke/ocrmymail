@@ -57,7 +57,7 @@ Configure your settings in the `.env` and run OCRmyMail with:
 Then run it manually with Go (requires Go 1.15 or newer):
 
 ```bash
-go run cmd/pdfocrsmtpgateway/*.go
+go run cmd/ocrmymail/*.go
 ```
 
 To test the email functionality, you can send the `test.txt` SMTP mail with a tool like netcat:
@@ -80,15 +80,16 @@ docker run -it -e 'ACCEPTED_NETWORKS=192.168.0.0/16 172.16.0.0/12 10.0.0.0/8' -e
 - [sirupsen/logrus](https://github.com/sirupsen/logrus)
 - [gosimple/slug](https://github.com/gosimple/slug)
 - [go-mail/mail](https://github.com/go-mail/mail)
+- [google/uuid](https://github.com/google/uuid)
 
 
 ## TODO
 
 - [ ] Handle multiple recipients
-- [ ] Handle collissions when multiple attachments with same filename are to be handled
+- [x] Handle collissions when multiple attachments with same filename are to be handled
 - [ ] Metrics
 - [ ] Error handling with remote tool
-- [ ] Delete files after sending out mail
+- [x] Delete files after sending out mail
 - [ ] Tests
 
 

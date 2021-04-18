@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/DusanKasan/parsemail v1.2.0
+	github.com/google/uuid v1.2.0
 	github.com/gopistolet/smtp v0.0.0-20210418095218-57111413d275
 	github.com/gosimple/slug v1.9.0
 	github.com/pkg/errors v0.9.1

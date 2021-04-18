@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/DusanKasan/parsemail"
+	"github.com/google/uuid"
 	"github.com/gopistolet/smtp/smtp"
 	"github.com/gosimple/slug"
 	log "github.com/sirupsen/logrus"
@@ -34,7 +36,7 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 		if attachment.ContentType == "image/pdf" {
 
 			documentName := getSafeDocumentName(attachment.Filename)
-			attachmentFileName := tmpDir + documentName + ".pdf"
+			attachmentFileName := tmpDir + documentName + "_" + uuid.NewString() + ".pdf"
 
 			err := downloadAttachment(attachmentFileName, attachment.Data)
 			if err != nil {
@@ -62,6 +64,14 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 	err = o.SendMail(s.To[0].String(), email.Subject, email.TextBody, attachmentsToMailOut)
 	if err != nil {
 		log.Errorf("couldn't mailout the OCRed content: %v", err)
+	}
+
+	// Delete attachments after they are mailed out
+	for _, attachment := range attachmentsToMailOut {
+		err := os.Remove(attachment)
+		if err != nil {
+			log.Errorf("couldn't delete attachment: %v", err)
+		}
 	}
 
 	fmt.Println("Relayed email to original recipient.")
