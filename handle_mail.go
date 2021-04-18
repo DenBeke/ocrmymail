@@ -78,13 +78,13 @@ func downloadAttachment(filename string, data io.Reader) error {
 
 	attachmentBytes, err := ioutil.ReadAll(data)
 	if err != nil {
-		return fmt.Errorf("coudldn't read attachment")
+		return fmt.Errorf("coudldn't read attachment: %v", err)
 	}
 
 	// write the whole body at once
 	err = ioutil.WriteFile(filename, attachmentBytes, 0644)
 	if err != nil {
-		return fmt.Errorf("couldn't write attachment to disk")
+		return fmt.Errorf("couldn't write attachment to disk: %v", err)
 	}
 
 	return nil

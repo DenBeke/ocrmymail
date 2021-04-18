@@ -1,0 +1,16 @@
+version: "3"
+services:
+  ocrmymail:
+    container_name: ocrmymail
+    # image: denbeke/ocrmymail
+    build: .
+    ports:
+      - "25:25"
+    environment:
+      - APP_URL=${APP_URL}
+      - REMOTE_SMTP_HOST=${REMOTE_SMTP_HOST}
+      - REMOTE_SMTP_PORT=${REMOTE_SMTP_PORT}
+      - REMOTE_SMTP_DISABLE_TLS=${REMOTE_SMTP_DISABLE_TLS}
+      - SMTP_FROM_EMAIL=${SMTP_FROM_EMAIL}
+      - ADMIN_MAIL=${ADMIN_MAIL}
+    restart: unless-stopped
