@@ -5,6 +5,10 @@ OCRmyMail is an SMTP server relay that adds an OCR text layer to PDF mail attach
 
 OCRmyMail doesn't have any SMTP authentication mechanism or TLS. It is aimed to be used within a local or dockerized environment where authentication doesn't matter. **It is not meant to be put somewhere publicly!**
 
+[![Build Status](https://travis-ci.com/DenBeke/ocrmymail.svg?branch=master)](https://travis-ci.com/DenBeke/ocrmymail)
+[![Go Report Card](https://goreportcard.com/badge/github.com/DenBeke/ocrmymail)](https://goreportcard.com/report/github.com/DenBeke/ocrmymail)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/denbeke/ocrmymail?sort=date)](https://hub.docker.com/r/denbeke/ocrmymail)
+
 
 ## Usage (Docker)
 
