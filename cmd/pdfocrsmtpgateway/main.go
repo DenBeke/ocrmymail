@@ -11,7 +11,7 @@ func main() {
 	config := ocrmymail.BuildConfigFromEnv()
 	OCRMyMail, err := ocrmymail.New(config)
 	if err != nil {
-		log.Fatalln("couldn't create OCRMyMail instance: %v", err)
+		log.Fatalf("couldn't create OCRMyMail instance: %v", err)
 	}
 
 	OCRMyMail.Serve()

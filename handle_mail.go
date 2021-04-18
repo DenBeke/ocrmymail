@@ -23,7 +23,7 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 
 	email, err := parsemail.Parse(reader)
 	if err != nil {
-		log.Errorf("couldn't parse email body: %w", err)
+		log.Errorf("couldn't parse email body: %v", err)
 	}
 
 	log.Printf("%+v", email)
@@ -61,7 +61,7 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 	// TODO handle multiple recipients
 	err = o.SendMail(s.To[0].String(), email.Subject, email.TextBody, attachmentsToMailOut)
 	if err != nil {
-		log.Errorln("couldn't mailout the OCRed content: %v", err)
+		log.Errorf("couldn't mailout the OCRed content: %v", err)
 	}
 
 	fmt.Println("Relayed email to original recipient.")
