@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"runtime/debug"
 	"syscall"
 
 	"github.com/evalphobia/logrus_sentry"
@@ -31,9 +32,17 @@ func (o *OCRMyMail) Serve() {
 			logrus.ErrorLevel,
 		})
 
+		hook.StacktraceConfiguration.Enable = true
+
 		if err == nil {
 			log.AddHook(hook)
 		}
+
+		defer func() {
+			if err := recover(); err != nil {
+				log.WithField("stacktrace", string(debug.Stack())).Fatalf("panic: %s", err)
+			}
+		}()
 	}
 
 	log.WithField("config", fmt.Sprintf("%+v", o.config)).Println("Starting PDF OCR SMTP Gateway ✉️")

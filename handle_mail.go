@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"runtime/debug"
 	"strings"
 
 	"github.com/DusanKasan/parsemail"
@@ -30,6 +31,15 @@ func (o *OCRMyMail) Handle(s *smtp.State) {
 }
 
 func (o *OCRMyMail) handleMail(s *smtp.State) {
+
+	// Recover from panics
+	if o.config.SentryDSN != "" {
+		defer func() {
+			if err := recover(); err != nil {
+				log.WithField("stacktrace", string(debug.Stack())).Fatalf("panic: %s", err)
+			}
+		}()
+	}
 
 	log.Println("parsing incoming mail...")
 	//log.Debugf("%+v", s)
