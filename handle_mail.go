@@ -18,14 +18,28 @@ import (
 // Handle implements the GoPistolet SMTP Handler interface
 func (o *OCRMyMail) Handle(s *smtp.State) {
 
-	log.Println("received an incoming mail...")
-	// log.Printf("%+v", s)
+	if o.config.HandleAsync {
+		log.Debugln("handling incoming mail async")
+		state := *s
+		go o.handleMail(&state)
+	} else {
+		log.Debugln("handling incoming mail sync")
+		o.handleMail(s)
+	}
+
+}
+
+func (o *OCRMyMail) handleMail(s *smtp.State) {
+
+	log.Println("parsing incoming mail...")
+	//log.Debugf("%+v", s)
 
 	reader := bytes.NewReader(s.Data)
 
 	email, err := parsemail.Parse(reader)
 	if err != nil {
 		log.Errorf("couldn't parse email body: %v", err)
+		return
 	}
 
 	log.Printf("%+v", email)

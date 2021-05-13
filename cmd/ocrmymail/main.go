@@ -8,6 +8,8 @@ import (
 
 func main() {
 
+	log.SetLevel(log.DebugLevel)
+
 	config := ocrmymail.BuildConfigFromEnv()
 	OCRMyMail, err := ocrmymail.New(config)
 	if err != nil {

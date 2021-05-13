@@ -91,6 +91,7 @@ docker run -it -e 'ACCEPTED_NETWORKS=192.168.0.0/16 172.16.0.0/12 10.0.0.0/8' -e
 - [ ] Error handling with remote tool
 - [x] Delete files after sending out mail
 - [ ] Tests
+- [x] Async mail handling (use `HANDLE_ASYNC=1` env variable)
 
 
 ## Author

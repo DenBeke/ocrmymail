@@ -16,6 +16,7 @@ var (
 type Config struct {
 	MetricsAddress string
 	AccessLog      bool
+	HandleAsync    bool
 
 	// SMTP server config for OCRMyMail
 	SMTP struct {
@@ -77,6 +78,16 @@ func BuildConfigFromEnv() *Config {
 	accessLog := getEnv("ACCESS_LOG", "1")
 	if accessLog == "0" {
 		config.AccessLog = false
+	} else {
+		config.AccessLog = true
+	}
+
+	// Handle Async
+	handleAsync := getEnv("HANDLE_ASYNC", "0")
+	if handleAsync == "1" {
+		config.HandleAsync = true
+	} else {
+		config.HandleAsync = false
 	}
 
 	// Admin email

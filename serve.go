@@ -27,6 +27,10 @@ func (o *OCRMyMail) Serve() {
 		log.Fatalln("OCRmyPDF is not installed. Please install the command: https://github.com/jbarlow83/OCRmyPDF")
 	}
 
+	if o.config.HandleAsync {
+		log.Warnln("Async mail handling is enabled. Mails might 'disappear' silently on crashes or errors.")
+	}
+
 	// Configure and start GoPistolet SMTP server
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, os.Interrupt, syscall.SIGTERM)
