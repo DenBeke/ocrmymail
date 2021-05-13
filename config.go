@@ -17,6 +17,7 @@ type Config struct {
 	MetricsAddress string
 	AccessLog      bool
 	HandleAsync    bool
+	SentryDSN      string
 
 	// SMTP server config for OCRMyMail
 	SMTP struct {
@@ -95,6 +96,9 @@ func BuildConfigFromEnv() *Config {
 
 	// Metrics
 	config.MetricsAddress = getEnv("METRICS_ADDRESS", defaultMetricsAddress)
+
+	// Sentry DSN
+	config.SentryDSN = getEnv("SENTRY_DSN", "")
 
 	return config
 }

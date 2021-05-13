@@ -6,7 +6,9 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/evalphobia/logrus_sentry"
 	"github.com/gopistolet/smtp/mta"
+	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -19,6 +21,19 @@ func (o *OCRMyMail) Serve() {
 	err := o.config.Validate()
 	if err != nil {
 		log.Fatalf("Config file is not valid: %v", err)
+	}
+
+	// Error logging with Sentry
+	if o.config.SentryDSN != "" {
+		hook, err := logrus_sentry.NewSentryHook(o.config.SentryDSN, []logrus.Level{
+			logrus.PanicLevel,
+			logrus.FatalLevel,
+			logrus.ErrorLevel,
+		})
+
+		if err == nil {
+			log.AddHook(hook)
+		}
 	}
 
 	log.WithField("config", fmt.Sprintf("%+v", o.config)).Println("Starting PDF OCR SMTP Gateway ✉️")

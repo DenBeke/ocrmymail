@@ -78,6 +78,7 @@ docker run -it -e 'ACCEPTED_NETWORKS=192.168.0.0/16 172.16.0.0/12 10.0.0.0/8' -e
 - [gopistolet/smtp](https://github.com/gopistolet/smtp)
 - [DusanKasan/parsemail](https://github.com/DusanKasan/parsemail)
 - [sirupsen/logrus](https://github.com/sirupsen/logrus)
+- [evalphobia/logrus_sentry](https://github.com/evalphobia/logrus_sentry)
 - [gosimple/slug](https://github.com/gosimple/slug)
 - [go-mail/mail](https://github.com/go-mail/mail)
 - [google/uuid](https://github.com/google/uuid)
@@ -88,7 +89,7 @@ docker run -it -e 'ACCEPTED_NETWORKS=192.168.0.0/16 172.16.0.0/12 10.0.0.0/8' -e
 - [ ] Handle multiple recipients
 - [x] Handle collissions when multiple attachments with same filename are to be handled
 - [ ] Metrics
-- [ ] Error handling with remote tool
+- [x] Error handling with Sentry (use `SENTRY_DSN=<your sentry dsn>` env variable)
 - [x] Delete files after sending out mail
 - [ ] Tests
 - [x] Async mail handling (use `HANDLE_ASYNC=1` env variable)
